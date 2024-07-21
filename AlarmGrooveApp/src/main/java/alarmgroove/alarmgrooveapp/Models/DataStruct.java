@@ -3,14 +3,14 @@ package alarmgroove.alarmgrooveapp.Models;
 public class DataStruct {
     private String SSID;
     private String password;
-    private float latitude;
-    private float longitude;
+    private String latitude;
+    private String longitude;
 
     private int comPort;
 
     private String APIKey;
 
-    public DataStruct(String SSID, String password, float latitude, float longitude, String APIKey, int comPort) {
+    public DataStruct(String SSID, String password, String latitude, String longitude, String APIKey, int comPort) {
         this.SSID = SSID;
         this.password = password;
         this.latitude = latitude;
@@ -31,11 +31,11 @@ public class DataStruct {
         return password;
     }
 
-    public float getLatitude() {
+    public String getLatitude() {
         return latitude;
     }
 
-    public float getLongitude() {
+    public String getLongitude() {
         return longitude;
     }
 

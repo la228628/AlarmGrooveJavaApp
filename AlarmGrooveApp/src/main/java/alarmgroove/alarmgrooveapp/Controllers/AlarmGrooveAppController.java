@@ -74,10 +74,12 @@ public class AlarmGrooveAppController extends Application implements MainWindowV
     private DataStruct constructDataStruct(String SSID, String password, String latitude, String longitude, String APIKey, Integer comPort) {
         String ssid = SSID;
         String pass = password;
-        float lat;
-        float lon;
+        float lat = 0;
+        float lon = 0;
         String key = APIKey;
         int port = comPort;
+        String latString;
+        String lonString;
 
         DataStruct data;
 
@@ -88,20 +90,25 @@ public class AlarmGrooveAppController extends Application implements MainWindowV
             pass = "default";
         }
         if (latitude.isEmpty()) {
-            lat = 91;
+            latString ="default";
         } else {
             lat = Float.parseFloat(latitude);
+            latString = Float.toString(lat);
         }
         if (longitude.isEmpty()) {
-            lon = 181;
+            lonString = "default";
         } else {
             lon = Float.parseFloat(longitude);
+            lonString = Float.toString(lon);
         }
         if (APIKey == null || APIKey.isEmpty()) {
             key = "default";
         }
 
-        data = new DataStruct(ssid, pass, lat, lon, key, port);
+
+
+
+        data = new DataStruct(ssid, pass, latString, lonString, key, port);
         System.out.println(data);
 
         return data;
@@ -115,7 +122,7 @@ public class AlarmGrooveAppController extends Application implements MainWindowV
         System.out.println("Tentative d'ouverture du port : " + nomPortCOM);
         SerialPort comPort;
         comPort = SerialPort.getCommPort(nomPortCOM); // Remplacez "COM3" par votre port série
-        comPort.setComPortParameters(9600, 8, 1, 0); // Configurer les paramètres du port
+        comPort.setComPortParameters(115200, 8, 1, 0); // Configurer les paramètres du port
         comPort.setComPortTimeouts(SerialPort.TIMEOUT_WRITE_BLOCKING, 0, 0);
 
         try {
@@ -166,6 +173,8 @@ public class AlarmGrooveAppController extends Application implements MainWindowV
 
 
     }
+
+
 
 
 }
