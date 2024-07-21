@@ -19,6 +19,32 @@ public class DataStruct {
         this.comPort = comPort;
     }
 
+    public String getComPort() {
+        return Integer.toString(comPort);
+    }
+
+    public String getSSID() {
+        return SSID;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public float getLatitude() {
+        return latitude;
+    }
+
+    public float getLongitude() {
+        return longitude;
+    }
+
+    public String getAPIKey() {
+        return APIKey;
+    }
+
+
+
 }
 
 

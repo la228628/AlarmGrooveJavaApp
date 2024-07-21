@@ -10,6 +10,8 @@ import javafx.stage.Stage;
 
 import java.util.List;
 
+import com.fazecast.jSerialComm.*;
+
 public class AlarmGrooveAppController extends Application implements MainWindowViewController.MainWindowViewListener {
 
     MainWindowViewController mainWindowViewController;
@@ -54,6 +56,7 @@ public class AlarmGrooveAppController extends Application implements MainWindowV
         boolean isDataValid = Validator.validateData(SSID, password, latitude, longitude, APIKey, comPort);
         if (isDataValid) {
             DataStruct data = constructDataStruct(SSID, password, latitude, longitude, APIKey, Integer.parseInt(comPort));
+            sendDataToESP32(data);
             System.out.println("Data sent");
         } else {
             mainWindowViewController.showDataValidationError();
@@ -104,5 +107,65 @@ public class AlarmGrooveAppController extends Application implements MainWindowV
         return data;
 
     }
+
+
+    private void sendDataToESP32(DataStruct data) {
+
+        String nomPortCOM = "COM" + data.getComPort();
+        System.out.println("Tentative d'ouverture du port : " + nomPortCOM);
+        SerialPort comPort;
+        comPort = SerialPort.getCommPort(nomPortCOM); // Remplacez "COM3" par votre port série
+        comPort.setComPortParameters(9600, 8, 1, 0); // Configurer les paramètres du port
+        comPort.setComPortTimeouts(SerialPort.TIMEOUT_WRITE_BLOCKING, 0, 0);
+
+        try {
+            if (comPort.openPort()) {
+                System.out.println("Port ouvert avec succès : " + nomPortCOM);
+            } else {
+                System.out.println("Échec de l'ouverture du port : " + nomPortCOM);
+                return;
+            }
+
+            comPort.setComPortTimeouts(SerialPort.TIMEOUT_READ_SEMI_BLOCKING, 0, 0);
+
+
+            String ssid = "SSID:" + data.getSSID()+ "\n";
+            byte[] ssidBuffer = ssid.getBytes();
+            comPort.writeBytes(ssidBuffer, ssidBuffer.length);
+            Thread.sleep(500);
+
+
+            String password = "PASSWORD:" + data.getPassword()+ "\n";
+            byte[] passwordBuffer = password.getBytes();
+            comPort.writeBytes(passwordBuffer, passwordBuffer.length);
+            Thread.sleep(500);
+
+
+            String latitude = "LATITUDE:" + data.getLatitude()+ "\n";
+            byte[] latBuffer = latitude.getBytes();
+            comPort.writeBytes(latBuffer, latBuffer.length);
+            Thread.sleep(500);
+
+            String longitude = "LONGITUDE:" + data.getLongitude()+ "\n";
+            byte[] lonBuffer = longitude.getBytes();
+            comPort.writeBytes(lonBuffer, lonBuffer.length);
+            Thread.sleep(500);
+
+            String apiKey = "APIKEY:" + data.getAPIKey()+ "\n";
+            byte[] keyBuffer = apiKey.getBytes();
+            comPort.writeBytes(keyBuffer, keyBuffer.length);
+            Thread.sleep(500);
+
+
+            comPort.closePort();
+            System.out.println("Données envoyées avec succès");
+        } catch (Exception e) {
+            System.out.println("Une erreur s'est produite lors de l'ouverture ou de l'utilisation du port : " + e.getMessage());
+            e.printStackTrace();
+        }
+
+
+    }
+
 
 }
