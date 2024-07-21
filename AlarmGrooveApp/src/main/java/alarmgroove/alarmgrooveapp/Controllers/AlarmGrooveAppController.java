@@ -43,6 +43,7 @@ public class AlarmGrooveAppController extends Application implements MainWindowV
     public void onSelectedExistingSSID(String SSID) {
         mainWindowViewController.replaceSSIDText(SSID);
 
+
     }
 
     @Override
@@ -66,5 +67,6 @@ public class AlarmGrooveAppController extends Application implements MainWindowV
     public void onRefreshSSIDButtonClick() {
         mainWindowViewController.clearDetectedSSIDs();
         mainWindowViewController.setDetectedSSIDs(getDetectedSSIDs());
+        System.out.println("Refreshed SSIDs");
     }
 }
