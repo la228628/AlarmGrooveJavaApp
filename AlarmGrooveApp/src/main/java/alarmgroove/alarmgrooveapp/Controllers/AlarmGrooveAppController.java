@@ -74,12 +74,10 @@ public class AlarmGrooveAppController extends Application implements MainWindowV
     private DataStruct constructDataStruct(String SSID, String password, String latitude, String longitude, String APIKey, Integer comPort) {
         String ssid = SSID;
         String pass = password;
-        float lat = 0;
-        float lon = 0;
         String key = APIKey;
         int port = comPort;
-        String latString;
-        String lonString;
+        String latString = latitude;
+        String lonString = longitude;
 
         DataStruct data;
 
@@ -91,15 +89,9 @@ public class AlarmGrooveAppController extends Application implements MainWindowV
         }
         if (latitude.isEmpty()) {
             latString ="default";
-        } else {
-            lat = Float.parseFloat(latitude);
-            latString = Float.toString(lat);
         }
         if (longitude.isEmpty()) {
             lonString = "default";
-        } else {
-            lon = Float.parseFloat(longitude);
-            lonString = Float.toString(lon);
         }
         if (APIKey == null || APIKey.isEmpty()) {
             key = "default";
@@ -117,6 +109,10 @@ public class AlarmGrooveAppController extends Application implements MainWindowV
 
 
     private void sendDataToESP32(DataStruct data) {
+
+        System.out.println("COORDONNEES : ");
+        System.out.println(data.getLatitude());
+        System.out.println(data.getLongitude());
 
         String nomPortCOM = "COM" + data.getComPort();
         System.out.println("Tentative d'ouverture du port : " + nomPortCOM);
@@ -149,11 +145,13 @@ public class AlarmGrooveAppController extends Application implements MainWindowV
 
 
             String latitude = "LATITUDE:" + data.getLatitude()+ "\n";
+            System.out.println(latitude);
             byte[] latBuffer = latitude.getBytes();
             comPort.writeBytes(latBuffer, latBuffer.length);
             Thread.sleep(500);
 
             String longitude = "LONGITUDE:" + data.getLongitude()+ "\n";
+            System.out.println(longitude);
             byte[] lonBuffer = longitude.getBytes();
             comPort.writeBytes(lonBuffer, lonBuffer.length);
             Thread.sleep(500);

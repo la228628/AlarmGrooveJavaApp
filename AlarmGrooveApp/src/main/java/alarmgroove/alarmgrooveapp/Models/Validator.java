@@ -27,6 +27,8 @@ public class Validator {
                 return false;
             }
         }
+        System.out.println(latitude);
+        System.out.println(longitude);
         return true;
 
     }
