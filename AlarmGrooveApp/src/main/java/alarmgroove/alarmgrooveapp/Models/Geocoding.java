@@ -6,8 +6,10 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class Geocoding {
@@ -30,7 +32,7 @@ public class Geocoding {
                 String jsonResponse = EntityUtils.toString(response.getEntity());
                 JSONArray jsonArray = new JSONArray(jsonResponse);
 
-                if (jsonArray.length() > 0) {
+                if (!jsonArray.isEmpty()) {
                     JSONObject location = jsonArray.getJSONObject(0);
                     String latitude = location.getString("lat");
                     String longitude = location.getString("lon");
@@ -44,8 +46,9 @@ public class Geocoding {
                     coordinates.add("error");
                 }
             }
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (JSONException | NullPointerException  | IOException e) {
+            coordinates.add("error");
+
         }
 
         return coordinates;
