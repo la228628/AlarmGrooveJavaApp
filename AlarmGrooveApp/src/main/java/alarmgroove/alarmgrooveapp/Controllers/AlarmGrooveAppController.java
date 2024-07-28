@@ -6,11 +6,18 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.web.WebEngine;
+import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 
+import java.io.File;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.fazecast.jSerialComm.*;
+
 
 public class AlarmGrooveAppController extends Application implements MainWindowViewController.MainWindowViewListener {
 
@@ -20,15 +27,21 @@ public class AlarmGrooveAppController extends Application implements MainWindowV
     @Override
     public void start(Stage stage) throws Exception {
 
+        Geocoding.getCoordinates("Belgium", "Leuze-en-Hainaut");
+
         FXMLLoader fxmlLoader = new FXMLLoader(MainWindowViewController.getFXMLPath());
         Scene scene = new Scene(fxmlLoader.load());
         this.mainWindowViewController = fxmlLoader.getController();
         this.mainWindowViewController.setListener(this);
         mainWindowViewController.setDetectedSSIDs(getDetectedSSIDs());
+
+        WebView mapBoxPane = mainWindowViewController.getMapBoxPane();
+        setMapBoxPane(mapBoxPane);
+
+
         stage.setScene(scene);
         stage.show();
         System.out.println(WifiScanner.getAvailableSSIDs());
-
     }
 
     @Override
@@ -38,6 +51,23 @@ public class AlarmGrooveAppController extends Application implements MainWindowV
         alert.setHeaderText("Donnéés invalides");
         alert.setContentText("Certains champs sont vides ou invalides. Veuillez vérifier les données saisies.");
         alert.showAndWait();
+    }
+
+    @Override
+    public void onSendPlaceButtonClick(String country, String city) {
+        mainWindowViewController.hideErrorCoordinatesLabel();
+        String latitude = "default";
+        String longitude = "default";
+        ArrayList<String> coordinates = Geocoding.getCoordinates(country, city);
+        if (coordinates.size() == 2) {
+            latitude = coordinates.get(0);
+            longitude = coordinates.get(1);
+            mainWindowViewController.setCoordinatesLabel(latitude, longitude);
+        } else {
+            mainWindowViewController.showErrorCoordinatesLabel();
+        }
+
+
     }
 
     @Override
@@ -71,6 +101,25 @@ public class AlarmGrooveAppController extends Application implements MainWindowV
         System.out.println("Refreshed SSIDs");
     }
 
+    private void setMapBoxPane(WebView mapBoxPane) {
+        /*
+        URL resourceUrl = getClass().getResource("/index.html");
+        if (resourceUrl != null) {
+
+
+            mapBoxPane.getEngine().load(resourceUrl.toExternalForm());
+            mapBoxPane.getEngine().setJavaScriptEnabled(true);
+        } else {
+            System.out.println("Resource not found: /test.html");
+        }
+
+         */
+
+        //Test with a url from the internet
+
+
+    }
+
     private DataStruct constructDataStruct(String SSID, String password, String latitude, String longitude, String APIKey, Integer comPort) {
         String ssid = SSID;
         String pass = password;
@@ -88,7 +137,7 @@ public class AlarmGrooveAppController extends Application implements MainWindowV
             pass = "default";
         }
         if (latitude.isEmpty()) {
-            latString ="default";
+            latString = "default";
         }
         if (longitude.isEmpty()) {
             lonString = "default";
@@ -96,8 +145,6 @@ public class AlarmGrooveAppController extends Application implements MainWindowV
         if (APIKey == null || APIKey.isEmpty()) {
             key = "default";
         }
-
-
 
 
         data = new DataStruct(ssid, pass, latString, lonString, key, port);
@@ -132,31 +179,31 @@ public class AlarmGrooveAppController extends Application implements MainWindowV
             comPort.setComPortTimeouts(SerialPort.TIMEOUT_READ_SEMI_BLOCKING, 0, 0);
 
 
-            String ssid = "SSID:" + data.getSSID()+ "\n";
+            String ssid = "SSID:" + data.getSSID() + "\n";
             byte[] ssidBuffer = ssid.getBytes();
             comPort.writeBytes(ssidBuffer, ssidBuffer.length);
             Thread.sleep(500);
 
 
-            String password = "PASSWORD:" + data.getPassword()+ "\n";
+            String password = "PASSWORD:" + data.getPassword() + "\n";
             byte[] passwordBuffer = password.getBytes();
             comPort.writeBytes(passwordBuffer, passwordBuffer.length);
             Thread.sleep(500);
 
 
-            String latitude = "LATITUDE:" + data.getLatitude()+ "\n";
+            String latitude = "LATITUDE:" + data.getLatitude() + "\n";
             System.out.println(latitude);
             byte[] latBuffer = latitude.getBytes();
             comPort.writeBytes(latBuffer, latBuffer.length);
             Thread.sleep(500);
 
-            String longitude = "LONGITUDE:" + data.getLongitude()+ "\n";
+            String longitude = "LONGITUDE:" + data.getLongitude() + "\n";
             System.out.println(longitude);
             byte[] lonBuffer = longitude.getBytes();
             comPort.writeBytes(lonBuffer, lonBuffer.length);
             Thread.sleep(500);
 
-            String apiKey = "APIKEY:" + data.getAPIKey()+ "\n";
+            String apiKey = "APIKEY:" + data.getAPIKey() + "\n";
             byte[] keyBuffer = apiKey.getBytes();
             comPort.writeBytes(keyBuffer, keyBuffer.length);
             Thread.sleep(500);
@@ -171,8 +218,6 @@ public class AlarmGrooveAppController extends Application implements MainWindowV
 
 
     }
-
-
 
 
 }

@@ -7,6 +7,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.web.WebView;
 
 public class MainWindowViewController {
 
@@ -17,6 +18,18 @@ public class MainWindowViewController {
 
     @FXML
     private TextField LonField;
+
+    @FXML
+    private TextField cityTextBox;
+
+    @FXML
+    private TextField countryTextBox;
+
+    @FXML
+    private Button sendPlaceButton;
+
+    @FXML
+    private Label errorCoordinatesLabel;
 
     @FXML
     private TextField SSIDField;
@@ -37,6 +50,9 @@ public class MainWindowViewController {
     private ChoiceBox<String> detectedSSIDChoice;
     @FXML
     private Button refreshSSIDButton;
+
+    @FXML
+    private WebView mapBoxPane;
 
 
     public static URL getFXMLPath() {
@@ -72,6 +88,25 @@ public class MainWindowViewController {
         listener.showDataValidationError();
     }
 
+    public void onSendPlaceButtonClick(ActionEvent event) {
+        listener.onSendPlaceButtonClick(countryTextBox.getText(), cityTextBox.getText());
+    }
+
+
+
+    public void showErrorCoordinatesLabel() {
+        errorCoordinatesLabel.setText("Erreur lors de la récupération des coordonnées.");
+    }
+
+    public void setCoordinatesLabel(String latitude, String longitude) {
+        latField.setText(latitude);
+        LonField.setText(longitude);
+    }
+
+    public void hideErrorCoordinatesLabel() {
+        errorCoordinatesLabel.setText("");
+    }
+
     public interface MainWindowViewListener {
 
         void onSelectedExistingSSID(String SSID);
@@ -83,6 +118,8 @@ public class MainWindowViewController {
         void onRefreshSSIDButtonClick();
 
         void showDataValidationError();
+
+        void onSendPlaceButtonClick(String country, String city);
     }
 
     public void setListener(MainWindowViewListener listener) {
@@ -93,6 +130,10 @@ public class MainWindowViewController {
         for (String ssid : detectedSSIDs) {
             detectedSSIDChoice.getItems().add(ssid);
         }
+    }
+
+    public WebView getMapBoxPane(){
+        return mapBoxPane;
     }
 }
 
