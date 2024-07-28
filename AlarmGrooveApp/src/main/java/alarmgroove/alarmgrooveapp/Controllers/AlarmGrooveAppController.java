@@ -6,13 +6,10 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
-import javafx.scene.web.WebEngine;
-import javafx.scene.web.WebView;
+
 import javafx.stage.Stage;
 
-import java.io.File;
-import java.net.MalformedURLException;
-import java.net.URL;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,9 +31,7 @@ public class AlarmGrooveAppController extends Application implements MainWindowV
         this.mainWindowViewController = fxmlLoader.getController();
         this.mainWindowViewController.setListener(this);
         mainWindowViewController.setDetectedSSIDs(getDetectedSSIDs());
-
-        WebView mapBoxPane = mainWindowViewController.getMapBoxPane();
-        setMapBoxPane(mapBoxPane);
+        mainWindowViewController.fillComPortChoiceBox(getAllPorts());
 
 
         stage.setScene(scene);
@@ -101,24 +96,17 @@ public class AlarmGrooveAppController extends Application implements MainWindowV
         System.out.println("Refreshed SSIDs");
     }
 
-    private void setMapBoxPane(WebView mapBoxPane) {
-        /*
-        URL resourceUrl = getClass().getResource("/index.html");
-        if (resourceUrl != null) {
-
-
-            mapBoxPane.getEngine().load(resourceUrl.toExternalForm());
-            mapBoxPane.getEngine().setJavaScriptEnabled(true);
-        } else {
-            System.out.println("Resource not found: /test.html");
+    public ArrayList<Integer> getAllPorts() {
+        ArrayList<Integer> ports = new ArrayList<>();
+        SerialPort[] portNames = SerialPort.getCommPorts();
+        for (SerialPort port : portNames) {
+            ports.add(Integer.parseInt(port.getSystemPortName().substring(3)));
         }
-
-         */
-
-        //Test with a url from the internet
-
-
+        return ports;
     }
+
+
+
 
     private DataStruct constructDataStruct(String SSID, String password, String latitude, String longitude, String APIKey, Integer comPort) {
         String ssid = SSID;

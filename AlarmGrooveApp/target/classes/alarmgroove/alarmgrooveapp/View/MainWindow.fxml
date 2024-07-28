@@ -19,7 +19,6 @@
       <TextField fx:id="latField" layoutX="163.0" layoutY="303.0" promptText="Latitude" />
       <TextField fx:id="LonField" layoutX="164.0" layoutY="353.0" promptText="Longitude" />
       <Button fx:id="sendInfoButton" layoutX="473.0" layoutY="407.0" mnemonicParsing="false" onAction="#onSendButtonClick" text="Envoyer" />
-      <TextField fx:id="comPortField" layoutX="164.0" layoutY="173.0" promptText="Numéro du port" />
       <Label layoutX="13.0" layoutY="177.0" text="Port COM" />
       <ChoiceBox fx:id="detectedSSIDChoice" layoutX="336.0" layoutY="218.0" onAction="#onSelectedExistingSSID" prefWidth="150.0" />
       <Button fx:id="refreshSSIDButton" layoutX="506.0" layoutY="218.0" mnemonicParsing="false" onAction="#onRefreshSSIDButtonClick" text="Actualiser" />
@@ -34,5 +33,6 @@
             <Label fx:id="errorCoordinatesLabel" layoutX="18.0" layoutY="190.0" prefHeight="18.0" prefWidth="250.0" textFill="#d12020" />
          </children>
       </AnchorPane>
+      <ChoiceBox fx:id="comPortField" layoutX="163.0" layoutY="173.0" prefWidth="150.0" />
    </children>
 </AnchorPane>

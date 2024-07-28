@@ -35,7 +35,7 @@ public class MainWindowViewController {
     private TextField SSIDField;
 
     @FXML
-    private TextField comPortField;
+    private ChoiceBox comPortField;
 
     @FXML
     private TextField latField;
@@ -51,8 +51,7 @@ public class MainWindowViewController {
     @FXML
     private Button refreshSSIDButton;
 
-    @FXML
-    private WebView mapBoxPane;
+
 
 
     public static URL getFXMLPath() {
@@ -61,7 +60,7 @@ public class MainWindowViewController {
 
     public void onSendButtonClick(ActionEvent event) {
 
-        listener.onSendButtonClick(SSIDField.getText(), passwordField.getText(), latField.getText(), LonField.getText(), APIKeyField.getText(), comPortField.getText());
+        listener.onSendButtonClick(SSIDField.getText(), passwordField.getText(), latField.getText(), LonField.getText(), APIKeyField.getText(), comPortField.getValue().toString());
     }
 
     public List<String> getDetectedSSIDs() {
@@ -103,6 +102,10 @@ public class MainWindowViewController {
         LonField.setText(longitude);
     }
 
+    public void fillComPortChoiceBox(List<Integer> comPorts) {
+        comPortField.getItems().addAll(comPorts);
+    }
+
     public void hideErrorCoordinatesLabel() {
         errorCoordinatesLabel.setText("");
     }
@@ -132,9 +135,7 @@ public class MainWindowViewController {
         }
     }
 
-    public WebView getMapBoxPane(){
-        return mapBoxPane;
-    }
+
 }
 
 
