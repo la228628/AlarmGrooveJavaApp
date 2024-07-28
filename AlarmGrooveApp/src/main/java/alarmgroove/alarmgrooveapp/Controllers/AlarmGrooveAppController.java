@@ -34,6 +34,7 @@ public class AlarmGrooveAppController extends Application implements MainWindowV
         mainWindowViewController.fillComPortChoiceBox(getAllPorts());
 
 
+
         stage.setScene(scene);
         stage.show();
         System.out.println(WifiScanner.getAvailableSSIDs());
@@ -62,6 +63,14 @@ public class AlarmGrooveAppController extends Application implements MainWindowV
             mainWindowViewController.showErrorCoordinatesLabel();
         }
 
+
+    }
+
+    @Override
+    public void onRefreshPortBoxClick() {
+
+
+        mainWindowViewController.fillComPortChoiceBox(getAllPorts());
 
     }
 

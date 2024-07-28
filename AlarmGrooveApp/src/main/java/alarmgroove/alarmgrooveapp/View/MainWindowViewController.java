@@ -34,7 +34,7 @@ public class MainWindowViewController {
     private TextField SSIDField;
 
     @FXML
-    private ChoiceBox comPortField;
+    public ChoiceBox comPortField;
 
     @FXML
     private TextField latField;
@@ -49,6 +49,8 @@ public class MainWindowViewController {
     private ChoiceBox<String> detectedSSIDChoice;
     @FXML
     private Button refreshSSIDButton;
+    @FXML
+    private Button refreshPortButton;
 
 
 
@@ -102,11 +104,16 @@ public class MainWindowViewController {
     }
 
     public void fillComPortChoiceBox(List<Integer> comPorts) {
+        comPortField.getItems().clear();
         comPortField.getItems().addAll(comPorts);
     }
 
     public void hideErrorCoordinatesLabel() {
         errorCoordinatesLabel.setText("");
+    }
+
+    public void onRefreshPortBoxClick(ActionEvent event) {
+        listener.onRefreshPortBoxClick();
     }
 
     public interface MainWindowViewListener {
@@ -122,6 +129,8 @@ public class MainWindowViewController {
         void showDataValidationError();
 
         void onSendPlaceButtonClick(String country, String city);
+
+        void onRefreshPortBoxClick();
     }
 
     public void setListener(MainWindowViewListener listener) {
