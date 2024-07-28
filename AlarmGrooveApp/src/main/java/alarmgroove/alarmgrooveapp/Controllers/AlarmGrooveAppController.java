@@ -207,5 +207,9 @@ public class AlarmGrooveAppController extends Application implements MainWindowV
 
     }
 
+    public static void main(String[] args) {
+        launch(args);
+    }
+
 
 }

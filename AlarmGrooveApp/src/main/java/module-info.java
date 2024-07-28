@@ -6,7 +6,6 @@ module alarmgroove.alarmgrooveapp {
     requires com.dlsc.formsfx;
     requires net.synedra.validatorfx;
     requires com.fazecast.jSerialComm;
-    requires javafx.web;
     requires org.apache.httpcomponents.httpclient;
     requires org.apache.httpcomponents.httpcore;
     requires org.json;
