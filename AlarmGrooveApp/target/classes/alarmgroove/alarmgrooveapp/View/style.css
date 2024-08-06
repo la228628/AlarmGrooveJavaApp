@@ -6,6 +6,7 @@
 .titleLabel {
     -fx-font-size: 14px;
     -fx-text-fill: #333;
+
 }
 
 
@@ -53,10 +54,5 @@
 }
 
 
-@media screen and (min-width: 800px) {
-    .appTitle {
-        -fx-font-size: 48px;
-    }
 
 
-}

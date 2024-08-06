@@ -6,6 +6,7 @@
 .titleLabel {
     -fx-font-size: 14px;
     -fx-text-fill: #333;
+
 }
 
 
@@ -51,5 +52,7 @@
     -fx-border-radius: 5;
     -fx-padding: 10;
 }
+
+
 
 

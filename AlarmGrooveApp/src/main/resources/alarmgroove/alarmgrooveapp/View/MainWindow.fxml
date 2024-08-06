@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="539.0" prefWidth="943.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="alarmgroove.alarmgrooveapp.View.MainWindowViewController">
+<AnchorPane maxHeight="583.0" maxWidth="952.0" minHeight="0.0" minWidth="0.0" prefHeight="583.0" prefWidth="940.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="alarmgroove.alarmgrooveapp.View.MainWindowViewController">
    <children>
       <Label layoutX="14.0" layoutY="271.0" prefHeight="26.0" prefWidth="148.0" styleClass="titleLabel" text="SSID ( = nom du WiFi)">
          <font>
@@ -42,6 +42,6 @@
       </AnchorPane>
       <ChoiceBox fx:id="comPortField" layoutX="165.0" layoutY="214.0" prefHeight="31.0" prefWidth="148.0" />
       <Button fx:id="refreshPortButton" layoutX="321.0" layoutY="214.0" mnemonicParsing="false" onAction="#onRefreshPortBoxClick" prefHeight="27.0" prefWidth="73.0" text="Actualiser" />
-      <Label layoutX="22.0" layoutY="14.0" prefHeight="122.0" prefWidth="898.0" styleClass="appTitle" text="ALARM GROOVE APP" />
+      <Label layoutX="7.0" layoutY="14.0" minWidth="-Infinity" prefHeight="155.0" prefWidth="909.0" styleClass="appTitle" text="ALARM GROOVE APP" />
    </children>
 </AnchorPane>
