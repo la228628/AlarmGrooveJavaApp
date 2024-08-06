@@ -6,34 +6,42 @@
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="625.0" prefWidth="878.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="alarmgroove.alarmgrooveapp.View.MainWindowViewController">
+<AnchorPane prefHeight="539.0" prefWidth="943.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="alarmgroove.alarmgrooveapp.View.MainWindowViewController">
    <children>
-      <Label layoutX="13.0" layoutY="217.0" prefHeight="26.0" prefWidth="136.0" text="SSID ( = nom du WiFi)" />
-      <Label layoutX="14.0" layoutY="262.0" prefHeight="18.0" prefWidth="93.0" text="Mot de passe" />
-      <Label layoutX="14.0" layoutY="306.0" prefHeight="18.0" prefWidth="71.0" text="Latitude" />
-      <Label layoutX="14.0" layoutY="356.0" prefHeight="18.0" prefWidth="71.0" text="Longitude" />
-      <Label layoutX="14.0" layoutY="410.0" prefHeight="18.0" prefWidth="71.0" text="Clé de l'API" />
-      <TextField fx:id="SSIDField" layoutX="162.0" layoutY="218.0" promptText="SSID" />
-      <PasswordField fx:id="passwordField" layoutX="163.0" layoutY="259.0" promptText="Mot de passe" />
-      <TextField fx:id="latField" layoutX="163.0" layoutY="303.0" promptText="Latitude" />
-      <TextField fx:id="LonField" layoutX="164.0" layoutY="353.0" promptText="Longitude" />
-      <Button fx:id="sendInfoButton" layoutX="473.0" layoutY="407.0" mnemonicParsing="false" onAction="#onSendButtonClick" text="Envoyer" />
-      <Label layoutX="13.0" layoutY="177.0" text="Port COM" />
-      <ChoiceBox fx:id="detectedSSIDChoice" layoutX="336.0" layoutY="218.0" onAction="#onSelectedExistingSSID" prefWidth="150.0" />
-      <Button fx:id="refreshSSIDButton" layoutX="506.0" layoutY="218.0" mnemonicParsing="false" onAction="#onRefreshSSIDButtonClick" text="Actualiser" />
-      <Label layoutX="371.0" layoutY="198.0" text="SSIDs detectés " />
-      <TextField fx:id="APIKeyField" layoutX="165.0" layoutY="407.0" promptText="Clé de l'API meteoblue" />
-      <AnchorPane layoutX="588.0" layoutY="145.0" prefHeight="270.0" prefWidth="275.0" style="-fx-border-color: black;">
+      <Label layoutX="14.0" layoutY="271.0" prefHeight="26.0" prefWidth="148.0" styleClass="titleLabel" text="SSID ( = nom du WiFi)">
+         <font>
+            <Font size="14.0" />
+         </font></Label>
+      <Label layoutX="15.0" layoutY="316.0" prefHeight="18.0" prefWidth="93.0" styleClass="titleLabel" text="Mot de passe" />
+      <Label layoutX="15.0" layoutY="360.0" prefHeight="18.0" prefWidth="71.0" styleClass="titleLabel" text="Latitude" />
+      <Label layoutX="15.0" layoutY="410.0" prefHeight="18.0" prefWidth="71.0" styleClass="titleLabel" text="Longitude" />
+      <Label layoutX="15.0" layoutY="464.0" prefHeight="18.0" prefWidth="71.0" styleClass="titleLabel" text="Clé de l'API" />
+      <TextField fx:id="SSIDField" layoutX="163.0" layoutY="272.0" promptText="SSID" />
+      <PasswordField fx:id="passwordField" layoutX="164.0" layoutY="313.0" promptText="Mot de passe" />
+      <TextField fx:id="latField" layoutX="164.0" layoutY="357.0" promptText="Latitude" />
+      <TextField fx:id="LonField" layoutX="165.0" layoutY="407.0" promptText="Longitude" />
+      <Button fx:id="sendInfoButton" layoutX="492.0" layoutY="503.0" mnemonicParsing="false" onAction="#onSendButtonClick" prefHeight="27.0" prefWidth="73.0" text="Envoyer" />
+      <Label layoutX="15.0" layoutY="218.0" styleClass="titleLabel" text="Port COM">
+         <font>
+            <Font size="14.0" />
+         </font></Label>
+      <ChoiceBox fx:id="detectedSSIDChoice" layoutX="335.0" layoutY="276.0" onAction="#onSelectedExistingSSID" prefHeight="30.0" prefWidth="150.0" />
+      <Button fx:id="refreshSSIDButton" layoutX="493.0" layoutY="278.0" mnemonicParsing="false" onAction="#onRefreshSSIDButtonClick" text="Actualiser" />
+      <Label layoutX="363.0" layoutY="251.0" text="SSIDs detectés " />
+      <TextField fx:id="APIKeyField" layoutX="166.0" layoutY="461.0" promptText="Clé de l'API meteoblue" />
+      <AnchorPane layoutX="602.0" layoutY="243.0" prefHeight="256.0" prefWidth="320.0" style="-fx-border-color: black; -fx-border-radius: 15%;">
          <children>
-            <Label layoutX="12.0" layoutY="8.0" prefHeight="72.0" prefWidth="250.0" text="Entrez votre lieu pour obtenir vos coordonnées" />
+            <Label layoutX="12.0" layoutY="11.0" prefHeight="70.0" prefWidth="296.0" text="Entrez votre lieu pour obtenir vos coordonnées" />
             <TextField fx:id="countryTextBox" layoutX="14.0" layoutY="80.0" promptText="Pays" />
             <TextField fx:id="cityTextBox" layoutX="15.0" layoutY="133.0" promptText="Ville" />
-            <Button fx:id="sendPlaceButton" layoutX="12.0" layoutY="230.0" mnemonicParsing="false" onAction="#onSendPlaceButtonClick" text="OK" />
-            <Label fx:id="errorCoordinatesLabel" layoutX="18.0" layoutY="190.0" prefHeight="18.0" prefWidth="250.0" textFill="#d12020" />
+            <Button fx:id="sendPlaceButton" layoutX="28.0" layoutY="206.0" mnemonicParsing="false" onAction="#onSendPlaceButtonClick" text="OK" />
+            <Label fx:id="errorCoordinatesLabel" layoutX="15.0" layoutY="175.0" prefHeight="18.0" prefWidth="250.0" textFill="#d12020" />
          </children>
       </AnchorPane>
-      <ChoiceBox fx:id="comPortField" layoutX="163.0" layoutY="173.0" prefWidth="150.0" />
-      <Button fx:id="refreshPortButton" layoutX="319.0" layoutY="172.0" mnemonicParsing="false" onAction="#onRefreshPortBoxClick" prefHeight="26.0" prefWidth="71.0" text="Actualiser" />
+      <ChoiceBox fx:id="comPortField" layoutX="165.0" layoutY="214.0" prefHeight="31.0" prefWidth="148.0" />
+      <Button fx:id="refreshPortButton" layoutX="321.0" layoutY="214.0" mnemonicParsing="false" onAction="#onRefreshPortBoxClick" prefHeight="27.0" prefWidth="73.0" text="Actualiser" />
+      <Label layoutX="22.0" layoutY="14.0" prefHeight="122.0" prefWidth="898.0" styleClass="appTitle" text="ALARM GROOVE APP" />
    </children>
 </AnchorPane>
