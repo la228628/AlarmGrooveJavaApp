@@ -31,7 +31,6 @@ public class AlarmGrooveAppController extends Application implements MainWindowV
         mainWindowViewController.fillComPortChoiceBox(getAllPorts());
 
 
-
         stage.setMaxHeight(583);
         stage.setMaxWidth(940);
         stage.setMinHeight(583);
@@ -86,14 +85,20 @@ public class AlarmGrooveAppController extends Application implements MainWindowV
     }
 
     @Override
-    public void onSendButtonClick(String SSID, String password, String latitude, String longitude, String APIKey, String comPort) {
+    public void onSendButtonClick(String SSID, String password, String latitude, String longitude, String APIKey, Object comPort) {
 
-        boolean isDataValid = Validator.validateData(SSID, password, latitude, longitude, APIKey, comPort);
-        if (isDataValid) {
-            DataStruct data = constructDataStruct(SSID, password, latitude, longitude, APIKey, Integer.parseInt(comPort));
-            sendDataToESP32(data);
-            System.out.println("Data sent");
-        } else {
+        try {
+            String comPortString = comPort.toString();
+
+            boolean isDataValid = Validator.validateData(SSID, password, latitude, longitude, APIKey, comPortString);
+            if (isDataValid) {
+                DataStruct data = constructDataStruct(SSID, password, latitude, longitude, APIKey, Integer.parseInt(comPortString));
+                sendDataToESP32(data);
+                System.out.println("Data sent");
+            } else {
+                mainWindowViewController.showDataValidationError();
+            }
+        } catch (NullPointerException e) {
             mainWindowViewController.showDataValidationError();
         }
 
@@ -114,8 +119,6 @@ public class AlarmGrooveAppController extends Application implements MainWindowV
         }
         return ports;
     }
-
-
 
 
     private DataStruct constructDataStruct(String SSID, String password, String latitude, String longitude, String APIKey, Integer comPort) {

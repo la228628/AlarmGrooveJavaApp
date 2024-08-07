@@ -6,7 +6,6 @@ import java.util.List;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.layout.AnchorPane;
 
 public class MainWindowViewController {
 
@@ -53,17 +52,14 @@ public class MainWindowViewController {
     private Button refreshPortButton;
 
 
+
+
     public static URL getFXMLPath() {
         return MainWindowViewController.class.getResource("MainWindow.fxml");
     }
 
     public void onSendButtonClick(ActionEvent event) {
-        try {
-            listener.onSendButtonClick(SSIDField.getText(), passwordField.getText(), latField.getText(), LonField.getText(), APIKeyField.getText(), comPortField.getValue().toString());
-        } catch (NullPointerException e) {
-            listener.showDataValidationError();
-        }
-
+        listener.onSendButtonClick(SSIDField.getText(), passwordField.getText(), latField.getText(), LonField.getText(), APIKeyField.getText(), comPortField.getValue());
     }
 
     public List<String> getDetectedSSIDs() {
@@ -95,6 +91,7 @@ public class MainWindowViewController {
     }
 
 
+
     public void showErrorCoordinatesLabel() {
         errorCoordinatesLabel.setText("Erreur lors de la récupération des coordonnées.");
     }
@@ -123,7 +120,7 @@ public class MainWindowViewController {
 
         List<String> getDetectedSSIDs();
 
-        void onSendButtonClick(String SSID, String password, String latitude, String longitude, String APIKey, String comPort);
+        void onSendButtonClick(String SSID, String password, String latitude, String longitude, String APIKey, Object comPort);
 
         void onRefreshSSIDButtonClick();
 
