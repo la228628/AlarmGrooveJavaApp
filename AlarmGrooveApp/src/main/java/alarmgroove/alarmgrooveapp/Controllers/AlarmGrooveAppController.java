@@ -42,7 +42,6 @@ public class AlarmGrooveAppController extends Application implements MainWindowV
         stage.setTitle("ALARM GROOVE APP");
         stage.setScene(scene);
         stage.show();
-        System.out.println(WifiScanner.getAvailableSSIDs());
     }
 
     @Override

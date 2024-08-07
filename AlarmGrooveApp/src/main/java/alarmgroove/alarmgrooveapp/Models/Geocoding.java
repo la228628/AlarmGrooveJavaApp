@@ -33,9 +33,6 @@ public class Geocoding {
                     String longitude = location.getString("lon");
                     coordinates.add(latitude);
                     coordinates.add(longitude);
-
-                    System.out.println("Latitude: " + latitude);
-                    System.out.println("Longitude: " + longitude);
                 } else {
                     System.out.println("Aucune coordonnée trouvée pour cette ville et ce pays.");
                     coordinates.add("error");
