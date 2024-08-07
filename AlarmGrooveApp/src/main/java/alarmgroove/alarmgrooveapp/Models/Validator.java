@@ -3,7 +3,7 @@ package alarmgroove.alarmgrooveapp.Models;
 public class Validator {
 
     public static boolean validateData(String SSID, String password, String latitude, String longitude, String APIKey, String comPort) {
-        if (comPort.isEmpty()) {
+        if (comPort.isEmpty() ) {
             return false;
         }
         if (!latitude.isEmpty()) {

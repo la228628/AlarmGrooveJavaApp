@@ -53,15 +53,17 @@ public class MainWindowViewController {
     private Button refreshPortButton;
 
 
-
-
     public static URL getFXMLPath() {
         return MainWindowViewController.class.getResource("MainWindow.fxml");
     }
 
     public void onSendButtonClick(ActionEvent event) {
+        try {
+            listener.onSendButtonClick(SSIDField.getText(), passwordField.getText(), latField.getText(), LonField.getText(), APIKeyField.getText(), comPortField.getValue().toString());
+        } catch (NullPointerException e) {
+            listener.showDataValidationError();
+        }
 
-        listener.onSendButtonClick(SSIDField.getText(), passwordField.getText(), latField.getText(), LonField.getText(), APIKeyField.getText(), comPortField.getValue().toString());
     }
 
     public List<String> getDetectedSSIDs() {
@@ -91,7 +93,6 @@ public class MainWindowViewController {
     public void onSendPlaceButtonClick(ActionEvent event) {
         listener.onSendPlaceButtonClick(countryTextBox.getText(), cityTextBox.getText());
     }
-
 
 
     public void showErrorCoordinatesLabel() {

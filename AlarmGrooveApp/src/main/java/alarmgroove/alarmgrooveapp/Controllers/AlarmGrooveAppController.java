@@ -23,9 +23,6 @@ public class AlarmGrooveAppController extends Application implements MainWindowV
 
     @Override
     public void start(Stage stage) throws Exception {
-
-        Geocoding.getCoordinates("Belgium", "Leuze-en-Hainaut");
-
         FXMLLoader fxmlLoader = new FXMLLoader(MainWindowViewController.getFXMLPath());
         Scene scene = new Scene(fxmlLoader.load());
         this.mainWindowViewController = fxmlLoader.getController();
