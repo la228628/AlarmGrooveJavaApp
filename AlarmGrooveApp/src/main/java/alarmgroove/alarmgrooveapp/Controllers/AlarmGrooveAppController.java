@@ -39,6 +39,7 @@ public class AlarmGrooveAppController extends Application implements MainWindowV
         stage.setMaxWidth(940);
         stage.setMinHeight(583);
         stage.setMinWidth(940);
+        stage.setTitle("ALARM GROOVE APP");
         stage.setScene(scene);
         stage.show();
         System.out.println(WifiScanner.getAvailableSSIDs());
