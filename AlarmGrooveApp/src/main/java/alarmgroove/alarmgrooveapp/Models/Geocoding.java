@@ -20,7 +20,7 @@ public class Geocoding extends Thread {
     private String city;
 
     private GeocodingListener listener;
-
+    private volatile boolean triggered = false; //volatile keyword is used to make sure that the value of the variable is always read from the main memory
 
     public void setCountry(String country) {
         this.country = country;
@@ -31,6 +31,18 @@ public class Geocoding extends Thread {
     }
 
     public void run() {
+        System.out.println("Geocoding thread started");
+        while (true) {
+
+            if (triggered ) {
+                launchGeocoding();
+                triggered = false;
+            }
+        }
+
+    }
+
+    private void launchGeocoding() {
         String url = String.format("https://nominatim.openstreetmap.org/search?country=%s&city=%s&format=json", country, city);
         ArrayList<String> coordinates = new ArrayList<>();
         try (CloseableHttpClient httpClient = HttpClients.createDefault()) {
@@ -62,8 +74,14 @@ public class Geocoding extends Thread {
 
     }
 
+
+
     public void setListener(GeocodingListener listener) {
         this.listener = listener;
+    }
+
+    public void triggerGeocoding() {
+        this.triggered = true;
     }
 
     public interface GeocodingListener {

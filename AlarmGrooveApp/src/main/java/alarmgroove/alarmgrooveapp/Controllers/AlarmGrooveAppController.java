@@ -19,14 +19,15 @@ import com.fazecast.jSerialComm.*;
 public class AlarmGrooveAppController extends Application implements MainWindowViewController.MainWindowViewListener, Geocoding.GeocodingListener{
 
     MainWindowViewController mainWindowViewController;
-    //Geocoding geocoding;
+    Geocoding geocoding;
 
 
     @Override
     public void start(Stage stage) throws Exception {
 
-        //geocoding = new Geocoding();
-        //geocoding.setListener(this);
+        geocoding = new Geocoding();
+        geocoding.setListener(this);
+        geocoding.start();
 
         FXMLLoader fxmlLoader = new FXMLLoader(MainWindowViewController.getFXMLPath());
         Scene scene = new Scene(fxmlLoader.load());
@@ -57,11 +58,9 @@ public class AlarmGrooveAppController extends Application implements MainWindowV
     @Override
     public void onSendPlaceButtonClick(String country, String city) {
         mainWindowViewController.hideErrorCoordinatesLabel();
-        Geocoding geocoding = new Geocoding();
-        geocoding.setListener(this);
         geocoding.setCountry(country);
         geocoding.setCity(city);
-        geocoding.start();
+        geocoding.triggerGeocoding();
 
 
 
