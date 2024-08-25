@@ -3,6 +3,7 @@ package alarmgroove.alarmgrooveapp.View;
 import java.net.URL;
 import java.util.List;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -93,7 +94,7 @@ public class MainWindowViewController {
 
 
     public void showErrorCoordinatesLabel() {
-        errorCoordinatesLabel.setText("Erreur lors de la récupération des coordonnées.");
+        Platform.runLater(() -> errorCoordinatesLabel.setText("Erreur lors de la récupération des coordonnées."));
     }
 
     public void setCoordinatesLabel(String latitude, String longitude) {

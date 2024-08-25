@@ -16,13 +16,18 @@ import java.util.List;
 import com.fazecast.jSerialComm.*;
 
 
-public class AlarmGrooveAppController extends Application implements MainWindowViewController.MainWindowViewListener {
+public class AlarmGrooveAppController extends Application implements MainWindowViewController.MainWindowViewListener, Geocoding.GeocodingListener{
 
     MainWindowViewController mainWindowViewController;
+    //Geocoding geocoding;
 
 
     @Override
     public void start(Stage stage) throws Exception {
+
+        //geocoding = new Geocoding();
+        //geocoding.setListener(this);
+
         FXMLLoader fxmlLoader = new FXMLLoader(MainWindowViewController.getFXMLPath());
         Scene scene = new Scene(fxmlLoader.load());
         this.mainWindowViewController = fxmlLoader.getController();
@@ -52,18 +57,22 @@ public class AlarmGrooveAppController extends Application implements MainWindowV
     @Override
     public void onSendPlaceButtonClick(String country, String city) {
         mainWindowViewController.hideErrorCoordinatesLabel();
-        String latitude = "default";
-        String longitude = "default";
-        ArrayList<String> coordinates = Geocoding.getCoordinates(country, city);
+        Geocoding geocoding = new Geocoding();
+        geocoding.setListener(this);
+        geocoding.setCountry(country);
+        geocoding.setCity(city);
+        geocoding.start();
+
+
+
+    }
+
+    public void onCoordinatesReceived(ArrayList<String> coordinates) {
         if (coordinates.size() == 2) {
-            latitude = coordinates.get(0);
-            longitude = coordinates.get(1);
-            mainWindowViewController.setCoordinatesLabel(latitude, longitude);
+            mainWindowViewController.setCoordinatesLabel(coordinates.get(0), coordinates.get(1));
         } else {
             mainWindowViewController.showErrorCoordinatesLabel();
         }
-
-
     }
 
     @Override

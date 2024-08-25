@@ -1,5 +1,6 @@
 package alarmgroove.alarmgrooveapp.Models;
 
+import alarmgroove.alarmgrooveapp.Controllers.AlarmGrooveAppController;
 import org.apache.http.HttpException;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
@@ -13,9 +14,23 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class Geocoding {
+public class Geocoding extends Thread {
 
-    public static ArrayList<String> getCoordinates(String country, String city) {
+    private String country;
+    private String city;
+
+    private GeocodingListener listener;
+
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public void run() {
         String url = String.format("https://nominatim.openstreetmap.org/search?country=%s&city=%s&format=json", country, city);
         ArrayList<String> coordinates = new ArrayList<>();
         try (CloseableHttpClient httpClient = HttpClients.createDefault()) {
@@ -39,11 +54,19 @@ public class Geocoding {
                 }
             }
         } catch (JSONException | NullPointerException  | IOException e ) {
+            coordinates.clear();
             coordinates.add("error");
 
         }
+        listener.onCoordinatesReceived(coordinates);
 
-        return coordinates;
+    }
 
+    public void setListener(GeocodingListener listener) {
+        this.listener = listener;
+    }
+
+    public interface GeocodingListener {
+        void onCoordinatesReceived(ArrayList<String> coordinates);
     }
 }
