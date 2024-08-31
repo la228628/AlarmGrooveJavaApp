@@ -43,7 +43,7 @@ public class Geocoding extends Thread {
     }
 
     private void launchGeocoding() {
-        String url = String.format("https://nominatim.openstreetmap.org/search?country=%s&city=%s&format=json", country, city);
+        String url = String.format("https://nominatim.openstreetmap.org/search?country=%s&city=%s&format=json", country.trim(), city.trim());
         ArrayList<String> coordinates = new ArrayList<>();
         try (CloseableHttpClient httpClient = HttpClients.createDefault()) {
             HttpGet request = new HttpGet(url);
